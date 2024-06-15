@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package employee;
+
+import "google/protobuf/timestamp.proto";
+
+message Employee {
+  int32 id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string department = 4;
+  string address = 5;
+  string phone_number = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+  google.protobuf.Timestamp deleted_at = 9;
+}
+
+message CreateEmployeeRequest {
+  string name = 1;
+  string description = 2;
+  string image = 3;
+  repeated string tags = 4;
+}
+
+message CreateEmployeeResponse {
+  Employee employee = 1;
+}
+
+message GetEmployeeRequest {
+  int32 id = 1;
+}
+
+message GetEmployeeResponse {
+  Employee employee = 1;
+}
+
+message ListEmployeesRequest {
+
+}
+
+message ListEmployeesResponse {
+  repeated Employee employees = 1;
+}
+
+service EmployeeService {
+  rpc CreateEmployee(CreateEmployeeRequest) returns (CreateEmployeeResponse);
+  rpc GetEmployee(GetEmployeeRequest) returns (GetEmployeeResponse);
+  rpc ListEmployees(ListEmployeesRequest) returns (ListEmployeesResponse);
+}

@@ -35,10 +35,11 @@ export interface Employee {
 }
 
 export interface CreateEmployeeRequest {
-  name: string;
-  description: string;
-  image: string;
-  tags: string[];
+  firstName: string;
+  lastName: string;
+  department: string;
+  address: string;
+  phoneNumber: string;
 }
 
 export interface CreateEmployeeResponse {
@@ -250,22 +251,25 @@ export const Employee = {
 };
 
 function createBaseCreateEmployeeRequest(): CreateEmployeeRequest {
-  return { name: "", description: "", image: "", tags: [] };
+  return { firstName: "", lastName: "", department: "", address: "", phoneNumber: "" };
 }
 
 export const CreateEmployeeRequest = {
   encode(message: CreateEmployeeRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.name !== "") {
-      writer.uint32(10).string(message.name);
+    if (message.firstName !== "") {
+      writer.uint32(10).string(message.firstName);
     }
-    if (message.description !== "") {
-      writer.uint32(18).string(message.description);
+    if (message.lastName !== "") {
+      writer.uint32(18).string(message.lastName);
     }
-    if (message.image !== "") {
-      writer.uint32(26).string(message.image);
+    if (message.department !== "") {
+      writer.uint32(26).string(message.department);
     }
-    for (const v of message.tags) {
-      writer.uint32(34).string(v!);
+    if (message.address !== "") {
+      writer.uint32(34).string(message.address);
+    }
+    if (message.phoneNumber !== "") {
+      writer.uint32(42).string(message.phoneNumber);
     }
     return writer;
   },
@@ -282,28 +286,35 @@ export const CreateEmployeeRequest = {
             break;
           }
 
-          message.name = reader.string();
+          message.firstName = reader.string();
           continue;
         case 2:
           if (tag !== 18) {
             break;
           }
 
-          message.description = reader.string();
+          message.lastName = reader.string();
           continue;
         case 3:
           if (tag !== 26) {
             break;
           }
 
-          message.image = reader.string();
+          message.department = reader.string();
           continue;
         case 4:
           if (tag !== 34) {
             break;
           }
 
-          message.tags.push(reader.string());
+          message.address = reader.string();
+          continue;
+        case 5:
+          if (tag !== 42) {
+            break;
+          }
+
+          message.phoneNumber = reader.string();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -316,26 +327,30 @@ export const CreateEmployeeRequest = {
 
   fromJSON(object: any): CreateEmployeeRequest {
     return {
-      name: isSet(object.name) ? globalThis.String(object.name) : "",
-      description: isSet(object.description) ? globalThis.String(object.description) : "",
-      image: isSet(object.image) ? globalThis.String(object.image) : "",
-      tags: globalThis.Array.isArray(object?.tags) ? object.tags.map((e: any) => globalThis.String(e)) : [],
+      firstName: isSet(object.firstName) ? globalThis.String(object.firstName) : "",
+      lastName: isSet(object.lastName) ? globalThis.String(object.lastName) : "",
+      department: isSet(object.department) ? globalThis.String(object.department) : "",
+      address: isSet(object.address) ? globalThis.String(object.address) : "",
+      phoneNumber: isSet(object.phoneNumber) ? globalThis.String(object.phoneNumber) : "",
     };
   },
 
   toJSON(message: CreateEmployeeRequest): unknown {
     const obj: any = {};
-    if (message.name !== "") {
-      obj.name = message.name;
+    if (message.firstName !== "") {
+      obj.firstName = message.firstName;
     }
-    if (message.description !== "") {
-      obj.description = message.description;
+    if (message.lastName !== "") {
+      obj.lastName = message.lastName;
     }
-    if (message.image !== "") {
-      obj.image = message.image;
+    if (message.department !== "") {
+      obj.department = message.department;
     }
-    if (message.tags?.length) {
-      obj.tags = message.tags;
+    if (message.address !== "") {
+      obj.address = message.address;
+    }
+    if (message.phoneNumber !== "") {
+      obj.phoneNumber = message.phoneNumber;
     }
     return obj;
   },
@@ -345,10 +360,11 @@ export const CreateEmployeeRequest = {
   },
   fromPartial<I extends Exact<DeepPartial<CreateEmployeeRequest>, I>>(object: I): CreateEmployeeRequest {
     const message = createBaseCreateEmployeeRequest();
-    message.name = object.name ?? "";
-    message.description = object.description ?? "";
-    message.image = object.image ?? "";
-    message.tags = object.tags?.map((e) => e) || [];
+    message.firstName = object.firstName ?? "";
+    message.lastName = object.lastName ?? "";
+    message.department = object.department ?? "";
+    message.address = object.address ?? "";
+    message.phoneNumber = object.phoneNumber ?? "";
     return message;
   },
 };

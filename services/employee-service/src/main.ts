@@ -1,6 +1,8 @@
 import "reflect-metadata";
 import dataSource from "./db";
 import { Server, ServerCredentials } from "@grpc/grpc-js";
+import { getEmployeeServer } from "./server";
+import { EmployeeServiceService } from "@nodejs-microservices/protos/dist/employee/employee";
 
 const server = new Server();
 
@@ -12,6 +14,7 @@ const address = `${HOST}:${PORT}`;
 dataSource
   .initialize()
   .then((db) => {
+    server.addService(EmployeeServiceService, getEmployeeServer(db));
     server.bindAsync(
       address,
       ServerCredentials.createInsecure(),
